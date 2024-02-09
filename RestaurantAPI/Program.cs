@@ -1,10 +1,13 @@
-using AutoMapper;
+using NLog.Web;
 using RestaurantAPI;
 using RestaurantAPI.Entities;
 using RestaurantAPI.Services;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// NLog: Setup NLog for Dependency injection
+builder.Host.UseNLog();
 
 // Add services to the container.
 
