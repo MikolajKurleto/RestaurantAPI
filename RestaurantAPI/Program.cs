@@ -1,14 +1,18 @@
+using AutoMapper;
 using RestaurantAPI;
 using RestaurantAPI.Entities;
+using RestaurantAPI.Services;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
-builder.Services.AddTransient<IWeatherForecastService, WeatherForecastService>();
 builder.Services.AddScoped<RestaurantSeeder>();
 builder.Services.AddDbContext<RestaurantDbContext>();
+builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+builder.Services.AddScoped<IRestaurantService, RestaurantService>();
 
 var app = builder.Build();
 
