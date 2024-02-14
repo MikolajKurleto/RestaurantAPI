@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using RestaurantAPI.Models;
 using RestaurantAPI.Services;
+using System.Security.Claims;
 
 namespace RestaurantAPI.Controllers
 {
@@ -20,7 +21,7 @@ namespace RestaurantAPI.Controllers
         [HttpPut("{id}")]
         public ActionResult Update([FromRoute] int id, [FromBody] UpdateRestaurantDto restaurantToUpdate)
         {
-            _service.Update(id, restaurantToUpdate);
+            _service.Update(id, restaurantToUpdate, User);
 
             return Ok();
         }
@@ -28,7 +29,7 @@ namespace RestaurantAPI.Controllers
         [HttpDelete("{id}")]
         public ActionResult Delete([FromRoute] int id)
         {
-            _service.Delete(id);
+            _service.Delete(id, User);
 
             return NoContent();
         }
@@ -37,7 +38,8 @@ namespace RestaurantAPI.Controllers
         [Authorize(Roles = "Admin,Manager")]
         public ActionResult CreateRestaurant([FromBody] CreateRestaurantDto dto)
         {
-            var id = _service.Create(dto);
+            var userId = int.Parse(User.FindFirst(c => c.Type == ClaimTypes.NameIdentifier).Value);
+            var id = _service.Create(dto, userId);
 
             return Created($"/api/restaurant/{id}", null);
         }
