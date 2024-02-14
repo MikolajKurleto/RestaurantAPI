@@ -84,9 +84,10 @@ var app = builder.Build();
 var scope = app.Services.CreateScope();
 var seeder = scope.ServiceProvider.GetService<RestaurantSeeder>();
 
-seeder.Seed();
-
+app.UseStaticFiles();
 app.UseCors("FrontEndClient");
+
+seeder.Seed();
 
 if (app.Environment.IsDevelopment())
 {
