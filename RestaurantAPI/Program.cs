@@ -69,6 +69,14 @@ builder.Services.AddScoped<IValidator<RestaurantQuery>, RestaurantQueryValidator
 builder.Services.AddScoped<IUserContextService, UserContextService>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSwaggerGen();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("FrontEndClient", policyBuilder =>
+        policyBuilder.AllowAnyMethod()
+            .AllowAnyHeader()
+            .WithOrigins(builder.Configuration["AllowedOrigins"])
+        );
+});
 
 var app = builder.Build();
 
@@ -77,6 +85,8 @@ var scope = app.Services.CreateScope();
 var seeder = scope.ServiceProvider.GetService<RestaurantSeeder>();
 
 seeder.Seed();
+
+app.UseCors("FrontEndClient");
 
 if (app.Environment.IsDevelopment())
 {
