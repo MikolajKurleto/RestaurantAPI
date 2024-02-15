@@ -87,7 +87,7 @@ var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 var scope = app.Services.CreateScope();
-var seeder = scope.ServiceProvider.GetService<RestaurantSeeder>();
+var seeder = scope.ServiceProvider.GetRequiredService<RestaurantSeeder>();
 
 app.UseResponseCaching();
 app.UseStaticFiles();
