@@ -55,7 +55,7 @@ builder.Services.AddScoped<IAuthorizationHandler, MinimumAgeRequirementHandler>(
 builder.Services.AddScoped<IAuthorizationHandler, ResourceOperationRequirementHandler>();
 builder.Services.AddScoped<IAuthorizationHandler, CreatedMultipleRestaurantRequirementHandler>();
 builder.Services.AddControllers();
-builder.Services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
+builder.Services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters()
 builder.Services.AddScoped<RestaurantSeeder>();
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 builder.Services.AddScoped<IRestaurantService, RestaurantService>();
